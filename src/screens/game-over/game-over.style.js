@@ -33,8 +33,8 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     position: 'absolute',
-    top: win.height * 0.6,
-    left: win.width / 6,
+    bottom: win.height * 0.06,
+    alignSelf: 'center',
   },
 });
 

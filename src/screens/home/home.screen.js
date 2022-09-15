@@ -1,23 +1,16 @@
 import React from 'react';
 import {
+  ImageBackground,
   SafeAreaView,
   ScrollView,
   StatusBar,
-  StyleSheet,
-  Text,
-  Button,
   useColorScheme,
   View,
 } from 'react-native';
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+import {Colors} from 'react-native/Libraries/NewAppScreen';
 
+import GameButton from '../../components/game-button/game-button';
 import styles from './home.style';
 
 const Home = ({navigation}) => {
@@ -33,17 +26,28 @@ const Home = ({navigation}) => {
       <ScrollView
         contentInsetAdjustmentBehavior="automatic"
         style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Text style={{color: 'white', fontSize: 30}}> Home Page </Text>
-          <Button
-            title="Go to High Score"
-            onPress={() => navigation.navigate('High Score')}>
-            High Score Screen
-          </Button>
+        <View style={styles.container}>
+          <ImageBackground
+            source={require('../../../assets/home_screen_background.png')}
+            style={styles.image}>
+            <View style={styles.buttonContainer}>
+              <GameButton
+                onPress={() => navigation.navigate('Game Screen')}
+                title={'Start Game'}
+                iconName="gamepad"
+              />
+              <GameButton
+                onPress={() => navigation.navigate('Create Profile')}
+                title={'Create Profile'}
+                iconName="user"
+              />
+              <GameButton
+                onPress={() => console.log('Game Button pressed')}
+                title={'Leaderboard'}
+                iconName="fire"
+              />
+            </View>
+          </ImageBackground>
         </View>
       </ScrollView>
     </SafeAreaView>
