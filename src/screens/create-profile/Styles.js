@@ -63,6 +63,22 @@ const styles = StyleSheet.create({
     marginTop: 30,
     marginBottom: 20,
   },
+  editImageContainer: {
+    position: 'absolute',
+    justifyContent: 'center',
+    marginLeft: 115,
+    marginTop: 200,
+  },
+  inputNameStyle: {
+    color: 'white',
+    fontSize: 20,
+    textAlign: 'center',
+  },
+  inputAgeStyle: {
+    color: 'white',
+    fontSize: 22,
+    textAlign: 'center',
+  },
 });
 
 export default styles;

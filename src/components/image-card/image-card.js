@@ -11,6 +11,7 @@ const ImageCard = ({imageUri}: IProps) => (
     <Image
       source={{
         uri: imageUri,
+        cache: 'force-cache',
       }}
       style={styles.imagePreview}
     />

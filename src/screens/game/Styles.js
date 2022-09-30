@@ -30,6 +30,7 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-start',
     marginTop: 30,
     paddingHorizontal: 20,
+    paddingBottom: 30,
   },
   textContainer: {
     flexDirection: 'column',

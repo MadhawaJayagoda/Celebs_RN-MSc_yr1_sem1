@@ -2,21 +2,16 @@ import React, {useEffect, useState} from 'react';
 import {
   SafeAreaView,
   ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  Button,
   useColorScheme,
   View,
-  ActivityIndicator,
   Image,
   TouchableOpacity,
   PermissionsAndroid,
 } from 'react-native';
 
-import {Colors, Header} from 'react-native/Libraries/NewAppScreen';
+import {Colors} from 'react-native/Libraries/NewAppScreen';
 
-import styles from './create-profile.style';
+import styles from './Styles';
 import {Icon, Input} from '@rneui/base';
 import GameButton from '../../components/game-button/game-button';
 import {launchImageLibrary} from 'react-native-image-picker';
@@ -60,8 +55,6 @@ const CreateProfile = ({navigation}) => {
       ) {
         console.log('Camera permission given');
         launchImageLibrary({mediaType: 'mixed'}, res => {
-          console.log(res);
-          console.log('IMage URI: ', res.uri);
           setProfilePhoto(res.uri);
         });
       } else {
@@ -74,17 +67,12 @@ const CreateProfile = ({navigation}) => {
 
   const handleProfilePictureEdit = async () => {
     await requestCameraPermission();
-    // console.log('Profile Picture edit button pressed !!');
     launchImageLibrary({mediaType: 'photo'}, res => {
-      console.log(res);
-      console.log('IMage URI: ', res.assets[0].uri);
       setProfilePhoto(res.assets[0].uri);
     });
   };
 
-  useEffect(() => {
-    console.log('Component rerenderd !!', profilePhoto);
-  }, [profilePhoto]);
+  useEffect(() => {}, [profilePhoto]);
 
   return (
     <SafeAreaView style={[{backgroundStyle}, styles.safeAreaView]}>
@@ -94,30 +82,18 @@ const CreateProfile = ({navigation}) => {
         <View style={styles.container}>
           <TouchableOpacity onPress={() => handleProfilePictureEdit()}>
             <View style={styles.profileImageWrapper}>
-              {/*{profilePhoto ? (*/}
-              {/*  <Image*/}
-              {/*    source={{uri: profilePhoto}}*/}
-              {/*    style={styles.profileImage}*/}
-              {/*  />*/}
-              {/*) : (*/}
-              {/*  <Image*/}
-              {/*    source={require('../../../assets/profile-photo.jpg')}*/}
-              {/*    style={styles.profileImage}*/}
-              {/*  />*/}
-              {/*)}*/}
-              <Image
-                source={{
-                  uri: 'file:///data/user/0/com.celebs/cache/rn_image_picker_lib_temp_bacfc0c9-6fcf-4ead-9e1f-91c88d88b7a0.jpg',
-                }}
-                style={styles.profileImage}
-              />
-              <View
-                style={{
-                  position: 'absolute',
-                  justifyContent: 'center',
-                  marginLeft: 115,
-                  marginTop: 200,
-                }}>
+              {profilePhoto ? (
+                <Image
+                  source={{uri: profilePhoto}}
+                  style={styles.profileImage}
+                />
+              ) : (
+                <Image
+                  source={require('../../../assets/profile-photo.jpg')}
+                  style={styles.profileImage}
+                />
+              )}
+              <View style={styles.editImageContainer}>
                 <Icon
                   name="pencil"
                   type="font-awesome"
@@ -132,13 +108,13 @@ const CreateProfile = ({navigation}) => {
               placeholder="Enter your gamer name"
               onChangeText={value => setName(value)}
               containerStyle={styles.inputOneContainerStyle}
-              inputStyle={{color: 'white'}}
+              inputStyle={styles.inputNameStyle}
             />
             <Input
               placeholder="Enter your age"
               onChangeText={value => setAge(value)}
               containerStyle={styles.inputTwoContainerStyle}
-              inputStyle={{color: 'white'}}
+              inputStyle={styles.inputAgeStyle}
             />
           </View>
           <View style={styles.buttonContainer}>

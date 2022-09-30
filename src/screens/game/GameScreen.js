@@ -1,25 +1,16 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   SafeAreaView,
   ScrollView,
-  StatusBar,
-  StyleSheet,
   Text,
-  Button,
   useColorScheme,
   View,
-  ActivityIndicator,
-  Image,
-  TouchableOpacity,
 } from 'react-native';
 
-import {Colors, Header} from 'react-native/Libraries/NewAppScreen';
+import {Colors} from 'react-native/Libraries/NewAppScreen';
 
-import styles from './game.style';
-import {Icon, Input, Card, color} from '@rneui/base';
-import GameButton from '../../components/game-button/game-button';
+import styles from './Styles';
 import moment from 'moment';
-import {celebrities} from './data/celebrity.data';
 import ImageCard from '../../components/image-card/image-card';
 import AnswerText from '../../components/answer-text/answer-text';
 
@@ -27,6 +18,7 @@ const GameScreen = ({navigation}) => {
   const isDarkMode = useColorScheme() === 'dark';
   let startTime = moment();
   let endTime;
+  let celeb_data;
 
   const [counter, setCounter] = useState(0);
   const [gameData, setGameData] = useState();
@@ -37,8 +29,10 @@ const GameScreen = ({navigation}) => {
   };
 
   const fetchData = async () => {
-    const celeb_data = await celebrities();
-    console.log(celeb_data.data);
+    await fetch('http://localhost:3000/celebs')
+      .then(data => data.json())
+      .then(data => (celeb_data = data))
+      .catch(err => console.log(err));
     return celeb_data;
   };
 
@@ -48,29 +42,28 @@ const GameScreen = ({navigation}) => {
     });
   }, []);
 
-  useEffect(() => {
-    console.log('Component re-rendered');
-  }, [gameData]);
+  useEffect(() => {}, [gameData]);
 
-  const answerBtnAction = (buttonIndex) => {
-    console.log('BUTTON ACTION');
+  const answerBtnAction = buttonIndex => {
     let cur_counter = counter;
     gameData.data.length > ++cur_counter && setCounter(cur_counter++);
-    // gameData.data.length > ++cur_counter && setCounter(cur_counter++);
     if (gameData.data?.[counter]?.correctAnsIndex === buttonIndex) {
-      console.log("Correct answer obtained");
       let cur_correctAns = correctAns;
       cur_correctAns++;
       setCorrectAns(cur_correctAns);
     }
-    if (gameData.data.length === (counter + 1)) {
+    if (gameData.data.length === counter + 1) {
       endTime = moment();
       var duration = moment.duration(endTime.diff(startTime));
       var seconds = duration.asSeconds();
-      navigation.navigate("Game Over", { score: correctAns, totalQuestions: gameData.data.length, timer: seconds});
+      navigation.navigate('Game Over', {
+        score: correctAns,
+        totalQuestions: gameData.data.length,
+        timer: seconds,
+      });
       return;
     }
-  }
+  };
 
   return (
     <SafeAreaView style={[{backgroundStyle}, styles.safeAreaView]}>
@@ -78,28 +71,9 @@ const GameScreen = ({navigation}) => {
         contentInsetAdjustmentBehavior="automatic"
         style={[{backgroundStyle}, {flex: 1}]}>
         <View style={styles.container}>
-          {/*<Button*/}
-          {/*  title="Fetch data"*/}
-          {/*  color="#841584"*/}
-          {/*  onPress={() => fetchData()}*/}
-          {/*/>*/}
           <View style={styles.headerContainer}>
             <Text style={styles.header}> Who am I ? </Text>
           </View>
-
-          <Button
-            title="Fetch data"
-            color="#841584"
-            onPress={() => {
-              // console.log('Data in the state :', gameData.data?.[0]);
-              console.log('Data in the state :', gameData.data?.[0].src);
-              console.log('Data in the state :', gameData.data.length);
-              console.log('Counter :', counter);
-              console.log('Number of CorrectAnsw :', correctAns);
-              console.log("Current time: ", startTime);
-            }}
-          />
-
           <ImageCard imageUri={gameData ? gameData.data?.[counter].src : ''} />
           <View style={styles.textContainer}>
             {gameData

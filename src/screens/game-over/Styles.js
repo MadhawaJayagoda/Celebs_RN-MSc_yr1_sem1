@@ -36,6 +36,35 @@ const styles = StyleSheet.create({
     bottom: win.height * 0.06,
     alignSelf: 'center',
   },
+  imageBgViewStyle: {
+    marginTop: 120,
+    marginHorizontal: 40,
+  },
+  imageBgStyle: {
+    width: 320,
+    height: 180,
+    resizeMode: 'cover',
+  },
+  cardViewMainContainer: {
+    alignSelf: 'center',
+  },
+  cardViewContainer: {
+    marginTop: 80,
+    height: 300,
+    width: 300,
+    borderRadius: 10,
+    overflow: 'hidden',
+    borderColor: '#ffc224',
+    borderWidth: 5,
+    paddingLeft: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  textStyle: {
+    fontSize: 20,
+    fontFamily: 'sans-serif-medium',
+    color: '#ffc224',
+  },
 });
 
 export default styles;
